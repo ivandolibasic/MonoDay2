@@ -12,28 +12,35 @@ namespace VehicleTracking.WebAPI.Controllers
     {
         private CarRepository carRepository = new CarRepository();
 
+        // GET api/Car
         [HttpGet]
-        public IEnumerable<Car> Get()
+        public HttpResponseMessage Get(HttpRequestMessage request)
         {
-            return carRepository.GetCars();
+            return request.CreateResponse(HttpStatusCode.OK, carRepository.ReadCars());
         }
 
+        // POST api/Car
         [HttpPost]
-        public void Post([FromBody] Car car)
+        public HttpResponseMessage Post(HttpRequestMessage request, [FromBody] Car car)
         {
-            carRepository.AddCar(car);
+            carRepository.CreateCar(car);
+            return request.CreateResponse(HttpStatusCode.OK);
         }
 
+        // PUT api/Car?id=1
         [HttpPut]
-        public void Put([FromBody] Car car)
+        public HttpResponseMessage Put(HttpRequestMessage request, int id, [FromBody] Car car)
         {
-            carRepository.UpdateCar(car.Name, car);
+            carRepository.UpdateCar(id, car);
+            return request.CreateResponse(HttpStatusCode.OK);
         }
 
+        // DELETE api/Car?id=1
         [HttpDelete]
-        public void Delete([FromBody] string name)
+        public HttpResponseMessage Delete(HttpRequestMessage request, int id)
         {
-            carRepository.DeleteCar(name);
+            carRepository.DeleteCar(id);
+            return request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }

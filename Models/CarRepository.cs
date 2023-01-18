@@ -13,40 +13,32 @@ namespace VehicleTracking.WebAPI.Models
         {
             cars = new List<Car>
             {
-                new Car { Name = "Ford", HorsePower = 450 },
-                new Car { Name = "Chevrolet", HorsePower = 550 },
-                new Car { Name = "Dodge", HorsePower = 300 }
+                new Car { Id = 1, Name = "Ford" },
+                new Car { Id = 2, Name = "Chevrolet" },
+                new Car { Id = 3, Name = "Dodge" }
             };
         }
 
-        public List<Car> GetCars()
+        public List<Car> ReadCars()
         {
             return cars;
         }
 
-        public void AddCar(Car newCar)
+        public void CreateCar(Car newCar)
         {
             cars.Add(newCar);
         }
 
-        public void UpdateCar(string name, Car updatedCar)
+        public void UpdateCar(int id, Car updatedCar)
         {
-            var carToUpdate = cars.FirstOrDefault(c => c.Name == name);
-            if (carToUpdate != null)
-            {
-                carToUpdate.Name = updatedCar.Name;
-                carToUpdate.HorsePower = updatedCar.HorsePower;
-            }
+            var car = cars.Find(c => c.Id == id);
+            car.Name = updatedCar.Name;
         }
 
-
-        public void DeleteCar(string name)
+        public void DeleteCar(int id)
         {
-            var carToDelete = cars.FirstOrDefault(c => c.Name == name);
-            if (carToDelete != null)
-            {
-                cars.Remove(carToDelete);
-            }
+            var car = cars.Find(c => c.Id == id);
+            cars.Remove(car);
         }
     }
 }
